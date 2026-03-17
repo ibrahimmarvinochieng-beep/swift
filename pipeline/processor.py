@@ -105,7 +105,21 @@ def _process_signal_impl(signal: dict) -> Optional[dict]:
     # ── 7. OpenClaw webhook (optional) ───────────────────────────────
     _notify_openclaw(structured)
 
+    # ── 8. Impact Prediction (optional) ──────────────────────────────
+    _run_impact_prediction(structured)
+
     return structured
+
+
+def _run_impact_prediction(event: dict) -> None:
+    """Run impact prediction for new event. Non-blocking, best-effort."""
+    try:
+        from services.impact_prediction.engine import predict_impacts
+        impacts = predict_impacts(event)
+        if impacts:
+            logger.info("impact_prediction_complete", event_id=event.get("event_id"), impacts=len(impacts))
+    except Exception as e:
+        logger.warning("impact_prediction_failed", event_id=event.get("event_id"), error=str(e))
 
 
 def _notify_openclaw(event: dict) -> None:

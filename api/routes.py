@@ -103,6 +103,52 @@ async def get_event(event_id: str, current_user: dict = Depends(get_current_user
     return EventResponse(**event)
 
 
+# ── Impacts (Impact Prediction Engine) ────────────────────────────────
+
+@router.get("/events/{event_id}/impacts", tags=["Impacts"])
+async def list_impacts_for_event(
+    event_id: str,
+    limit: int = Query(20, ge=1, le=100),
+    current_user: dict = Depends(get_current_user),
+):
+    """List predicted impacts for an event."""
+    event = event_repo.get_event(event_id)
+    if not event:
+        raise HTTPException(status_code=404, detail="Event not found")
+    from db.impact_store import get_impact_store
+    store = get_impact_store()
+    impacts = store.list_impacts_for_event(event_id, limit=limit)
+    return {"event_id": event_id, "impacts": impacts, "count": len(impacts)}
+
+
+@router.get("/impacts/{impact_id}", tags=["Impacts"])
+async def get_impact(impact_id: str, current_user: dict = Depends(get_current_user)):
+    """Get a single impact with explanation."""
+    from db.impact_store import get_impact_store
+    store = get_impact_store()
+    impact = store.get_impact(impact_id)
+    if not impact:
+        raise HTTPException(status_code=404, detail="Impact not found")
+    explanation = None
+    if impact.get("explanation_id"):
+        explanation = store.get_explanation(impact["explanation_id"])
+    return {"impact": impact, "explanation": explanation}
+
+
+@router.post("/events/{event_id}/predict-impacts", tags=["Impacts"])
+async def trigger_impact_prediction(
+    event_id: str,
+    current_user: dict = Depends(require_role("analyst")),
+):
+    """Manually trigger impact prediction for an event."""
+    event = event_repo.get_event(event_id)
+    if not event:
+        raise HTTPException(status_code=404, detail="Event not found")
+    from services.impact_prediction.engine import predict_impacts
+    impacts = predict_impacts(event)
+    return {"status": "completed", "event_id": event_id, "impacts_created": len(impacts), "impacts": impacts}
+
+
 # ── Ingestion ─────────────────────────────────────────────────────────
 
 @router.post("/ingest", response_model=dict, tags=["Ingestion"])
