@@ -13,6 +13,7 @@ from app.services.graph_queries import (
     get_impact_paths,
     shortest_path,
     weighted_propagation_paths,
+    propagation_paths_with_edges,
     subgraph_by_region_or_industry,
 )
 
@@ -77,6 +78,22 @@ async def shortest_path_endpoint(
     if not path:
         return {"from_id": from_id, "to_id": to_id, "path": None, "message": "No path found"}
     return {"from_id": from_id, "to_id": to_id, "path": path}
+
+
+@router.get("/propagation-paths/{node_id}")
+async def propagation_paths_endpoint(
+    node_id: str = Path(..., min_length=1, max_length=128),
+    max_depth: int = Query(3, ge=1, le=10),
+    min_weight: float = Query(0.0, ge=0, le=1),
+    limit: int = Query(5000, ge=1, le=10000),
+):
+    """Get propagation paths with edge details (weight, confidence, latency_hours) for impact simulation."""
+    validate_node_id(node_id)
+    async with get_session() as session:
+        paths = await propagation_paths_with_edges(
+            session, node_id, max_depth=max_depth, min_weight=min_weight, limit=limit
+        )
+    return {"node_id": node_id, "paths": paths}
 
 
 @router.get("/weighted-paths/{node_id}")

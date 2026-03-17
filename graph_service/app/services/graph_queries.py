@@ -121,6 +121,44 @@ async def weighted_propagation_paths(
     return [dict(record) async for record in result]
 
 
+async def propagation_paths_with_edges(
+    session: AsyncSession,
+    node_id: str,
+    max_depth: int = 3,
+    min_weight: float = 0.0,
+    limit: int = 5000,
+) -> list[dict[str, Any]]:
+    """Return propagation paths with full edge details (weight, confidence, latency_hours) for impact simulation."""
+    settings = get_settings()
+    depth = min(max_depth, settings.max_traversal_depth)
+    query = f"""
+    MATCH path = (start {{id: $id}})-[r*1..{depth}]->(target)
+    WHERE size(relationships(path)) > 0
+    WITH path, relationships(path) as rels
+    WITH path, rels,
+         reduce(lat = 0, rel IN rels | lat + COALESCE(rel.latency_hours, 0)) as total_latency,
+         reduce(w = 1.0, rel IN rels | w * COALESCE(rel.weight, 0.5)) as cum_weight,
+         reduce(c = 1.0, rel IN rels | c * COALESCE(rel.confidence, 0.8)) as cum_confidence
+    WITH path, rels, total_latency, cum_weight, cum_confidence
+    UNWIND range(0, size(rels)-1) as i
+    WITH path, total_latency, cum_weight, cum_confidence,
+         rels[i] as rel, nodes(path)[i] as from_n, nodes(path)[i+1] as to_n
+    WITH path, total_latency, cum_weight, cum_confidence,
+         collect({{from_id: from_n.id, to_id: to_n.id, weight: COALESCE(rel.weight, 0.5),
+                  confidence: COALESCE(rel.confidence, 0.8), latency_hours: COALESCE(rel.latency_hours, 0)}}) as edges
+    RETURN [n IN nodes(path) | n.id] as node_ids, edges, total_latency, cum_weight, cum_confidence
+    ORDER BY cum_weight * cum_confidence DESC
+    LIMIT $limit
+    """
+    result = await session.run(
+        query,
+        id=node_id,
+        min_weight=min_weight,
+        limit=limit,
+    )
+    return [dict(record) async for record in result]
+
+
 async def subgraph_by_region_or_industry(
     session: AsyncSession,
     region: Optional[str] = None,
