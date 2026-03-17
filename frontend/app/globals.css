@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --swift-electric-blue: #007AFF;
+    --swift-vibrant-orange: #FF9500;
+    --swift-bird-streak: #FFF500;
+    --swift-dark-slate: #0A1628;
+    --swift-surface: #142338;
+    --swift-border: #1E3A5F;
+  }
+}

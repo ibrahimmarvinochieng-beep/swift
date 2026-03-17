@@ -1,0 +1,20 @@
+{
+  "hooks": {
+    "enabled": true,
+    "token": "${OPENCLAW_HOOKS_TOKEN}",
+    "path": "/hooks",
+    "defaultSessionKey": "hook:swift"
+  },
+  "agents": {
+    "list": [
+      {
+        "id": "swift-alerts",
+        "name": "Swift Event Alerts",
+        "tools": {
+          "profile": "messaging",
+          "allow": ["sessions_send", "sessions_list"]
+        }
+      }
+    ]
+  }
+}

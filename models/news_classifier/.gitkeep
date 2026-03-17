@@ -1,0 +1,2 @@
+# Model files are gitignored (too large). Run train_news_classifier.py to generate.
+# Keep config.json and tokenizer files in repo for reference.

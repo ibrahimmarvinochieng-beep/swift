@@ -1,0 +1,9 @@
+{
+  "include": ["scripts"],
+  "extraPaths": [
+    ".",
+    "C:\\Users\\ADMIN\\Downloads\\swift_project\\venv\\Lib\\site-packages"
+  ],
+  "venvPath": "C:\\Users\\ADMIN\\Downloads\\swift_project",
+  "venv": "venv"
+}

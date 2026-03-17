@@ -1,0 +1,64 @@
+{
+  "best_global_step": 169,
+  "best_metric": 0.41102756892230574,
+  "best_model_checkpoint": "models\\news_classifier\\subset_1\\checkpoint-169",
+  "epoch": 1.0,
+  "eval_steps": 500,
+  "global_step": 169,
+  "is_hyper_param_search": false,
+  "is_local_process_zero": true,
+  "is_world_process_zero": true,
+  "log_history": [
+    {
+      "epoch": 0.2958579881656805,
+      "grad_norm": 4.103707790374756,
+      "learning_rate": 1.578947368421053e-05,
+      "loss": 3.408666687011719,
+      "step": 50
+    },
+    {
+      "epoch": 0.591715976331361,
+      "grad_norm": 4.429957389831543,
+      "learning_rate": 9.210526315789474e-06,
+      "loss": 3.2524893188476565,
+      "step": 100
+    },
+    {
+      "epoch": 0.8875739644970414,
+      "grad_norm": 4.6954169273376465,
+      "learning_rate": 2.631578947368421e-06,
+      "loss": 3.155531005859375,
+      "step": 150
+    },
+    {
+      "epoch": 1.0,
+      "eval_accuracy": 0.41102756892230574,
+      "eval_loss": 3.071094512939453,
+      "eval_runtime": 29.0467,
+      "eval_samples_per_second": 13.736,
+      "eval_steps_per_second": 0.448,
+      "step": 169
+    }
+  ],
+  "logging_steps": 50,
+  "max_steps": 169,
+  "num_input_tokens_seen": 0,
+  "num_train_epochs": 1,
+  "save_steps": 500,
+  "stateful_callbacks": {
+    "TrainerControl": {
+      "args": {
+        "should_epoch_stop": false,
+        "should_evaluate": false,
+        "should_log": false,
+        "should_save": true,
+        "should_training_stop": true
+      },
+      "attributes": {}
+    }
+  },
+  "total_flos": 44751548872008.0,
+  "train_batch_size": 16,
+  "trial_name": null,
+  "trial_params": null
+}

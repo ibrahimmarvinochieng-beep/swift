@@ -1,0 +1,39 @@
+.env
+.env.git
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+.eggs/
+*.log
+.mypy_cache/
+.pytest_cache/
+models/bert_model/*.bin
+models/bert_model/*.safetensors
+models/spacy_ner_model/model-*
+models/sentence_transformers_model/*.bin
+# News classifier (large — train locally; see scripts/train_news_classifier.py)
+models/news_classifier/*.safetensors
+models/news_classifier/**/*.safetensors
+models/news_classifier/**/*.pt
+models/news_classifier/**/*.pth
+models/news_classifier/**/*.bin
+models/news_classifier/training_args.bin
+*.faiss
+node_modules/
+.DS_Store
+Thumbs.db
+
+# SQLite database (local state — regenerated on startup)
+data/*.db
+data/*.db-wal
+data/*.db-shm
+data/dlq.json
+
+# TLS certificates (private keys — NEVER commit)
+certs/*-key.pem
+certs/*.key
