@@ -1,0 +1,26 @@
+# Deploy only frontend — ignore Python backend (too large for serverless)
+api/
+collectors/
+db/
+ingestion/
+pipeline/
+rate_limiter/
+services/
+streaming/
+tests/
+utils/
+scripts/
+openclaw_integration/
+models/
+venv/
+.venv/
+*.py
+requirements.txt
+manage_keys.py
+run_local.py
+start.bat
+start.ps1
+docker-compose.yml
+Dockerfile
+.env
+.env.*

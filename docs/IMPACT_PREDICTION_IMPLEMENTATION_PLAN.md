@@ -9,9 +9,9 @@
 
 | Task | Deliverable | Status |
 |------|-------------|--------|
-| 1.1 | Create `db/impact_store.py` — SQLite tables for impacts, impact_entities, impact_rules, graph_entities, graph_edges, explanations, impact_outcomes | Pending |
-| 1.2 | Seed default impact rules (event_type → impact_type) | Pending |
-| 1.3 | Seed minimal graph (entities + edges for demo) | Pending |
+| 1.1 | Create `db/impact_store.py` — SQLite tables for impacts, impact_entities, impact_rules, graph_entities, graph_edges, explanations, impact_outcomes | Done |
+| 1.2 | Seed default impact rules (event_type → impact_type) | Done |
+| 1.3 | Seed minimal graph (entities + edges for demo) | Done |
 
 ---
 
@@ -19,8 +19,8 @@
 
 | Task | Deliverable | Status |
 |------|-------------|--------|
-| 2.1 | `services/impact_prediction/event_mapper.py` — Rule engine, condition evaluation | Pending |
-| 2.2 | Configurable rules from DB | Pending |
+| 2.1 | `services/impact_prediction/event_mapper.py` — Rule engine, condition evaluation | Done |
+| 2.2 | Configurable rules from DB | Done |
 
 ---
 
@@ -28,8 +28,8 @@
 
 | Task | Deliverable | Status |
 |------|-------------|--------|
-| 3.1 | `services/impact_prediction/graph_service.py` — Entity resolution, traversal (BFS) | Pending |
-| 3.2 | Typed edges with weight, confidence | Pending |
+| 3.1 | `services/impact_prediction/graph_service.py` — Entity resolution, traversal (BFS) | Done |
+| 3.2 | Typed edges with weight, confidence | Done |
 
 ---
 
@@ -37,8 +37,8 @@
 
 | Task | Deliverable | Status |
 |------|-------------|--------|
-| 4.1 | `services/impact_prediction/simulation_engine.py` — Time-aware propagation, cost limits | Pending |
-| 4.2 | `services/impact_prediction/scoring.py` — Severity, probability, confidence | Pending |
+| 4.1 | `services/impact_prediction/simulation_engine.py` — Time-aware propagation, cost limits | Done |
+| 4.2 | `services/impact_prediction/scoring.py` — Severity, probability, confidence | Done |
 
 ---
 
@@ -46,8 +46,8 @@
 
 | Task | Deliverable | Status |
 |------|-------------|--------|
-| 5.1 | `services/impact_prediction/explainer.py` — Narrative + reasoning_path | Pending |
-| 5.2 | `services/impact_prediction/priority_engine.py` — Priority formula, top-N | Pending |
+| 5.1 | `services/impact_prediction/explainer.py` — Narrative + reasoning_path | Done |
+| 5.2 | `services/impact_prediction/priority_engine.py` — Priority formula, top-N | Done |
 
 ---
 
@@ -55,9 +55,9 @@
 
 | Task | Deliverable | Status |
 |------|-------------|--------|
-| 6.1 | API routes: `GET /api/v1/events/{id}/impacts`, `GET /api/v1/impacts/{id}` | Pending |
-| 6.2 | Pipeline trigger: run impact prediction after event creation | Pending |
-| 6.3 | Impact identity hash for deduplication | Pending |
+| 6.1 | API routes: `GET /api/v1/events/{id}/impacts`, `GET /api/v1/impacts/{id}` | Done |
+| 6.2 | Pipeline trigger: run impact prediction after event creation | Done |
+| 6.3 | Impact identity hash for deduplication | Done |
 
 ---
 
